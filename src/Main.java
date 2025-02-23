@@ -31,7 +31,7 @@ class Employee {
     }
 
     public void setDepartment(int department) {
-        if (department >= 1 && department <= 4) {
+        if (department < 1 || department > 5) {
             this.department = department;
         } else {
             System.out.println("Некорректный номер отдела.");
@@ -46,7 +46,7 @@ class Employee {
         }
     }
 
-        public String toString() {
+    public String toString() {
         return "ID: " + id + ", Ф.И.О: " + name + ", Отдел: " + department + ", Зарплата: " + salary;
     }
 
@@ -66,9 +66,10 @@ class Employee {
 }
 
 public class Main {
-    public static void main(String[] args) {
-        Employee[] employees = new Employee[10];
+    // Объявляем массив сотрудников как поле класса
+    private static Employee[] employees = new Employee[10];
 
+    public static void main(String[] args) {
         // Добавление сотрудников
         employees[0] = new Employee("Иванов Иван Иванович", 1, 50000);
         employees[1] = new Employee("Петров Петр Петрович", 2, 70000);
@@ -76,29 +77,28 @@ public class Main {
         employees[3] = new Employee("Попов Алексей Алексеевич", 4, 65000);
         employees[4] = new Employee("Добрыня Данил Борисович", 5, 55000);
 
-        printAllEmployees(employees);
+        printAllEmployees();
+        System.out.println("Сумма затрат на зарплату в месяц: " + calculateTotalSalary());
 
-        System.out.println("Сумма затрат на зарплату в месяц: " + calculateTotalSalary(employees));
-
-        Employee minSalaryEmployee = findEmployeeWithMinSalary(employees);
+        Employee minSalaryEmployee = findEmployeeWithMinSalary();
         System.out.println("Сотрудник с минимальной ЗП: " + (minSalaryEmployee != null ? minSalaryEmployee.getName() : "Нет данных"));
 
-        Employee maxSalaryEmployee = findEmployeeWithMaxSalary(employees);
+        Employee maxSalaryEmployee = findEmployeeWithMaxSalary();
         System.out.println("Сотрудник с максимальной ЗП: " + (maxSalaryEmployee != null ? maxSalaryEmployee.getName() : "Нет данных"));
 
-        System.out.println("Среднее значение зарплат: " + calculateAverageSalary(employees));
-
-        printEmployeeNames(employees);
+        System.out.println("Среднее значение зарплат: " + calculateAverageSalary());
+        printEmployeeNames();
     }
 
-    public static void printAllEmployees(Employee[] employees) {
+    public static void printAllEmployees() {
         for (Employee employee : employees) {
             if (employee != null) {
                 System.out.println(employee);
             }
         }
     }
-    public static double calculateTotalSalary(Employee[] employees) {
+
+    public static double calculateTotalSalary() {
         double totalSalary = 0;
         for (Employee employee : employees) {
             if (employee != null) {
@@ -107,7 +107,8 @@ public class Main {
         }
         return totalSalary;
     }
-    public static Employee findEmployeeWithMinSalary(Employee[] employees) {
+
+    public static Employee findEmployeeWithMinSalary() {
         Employee minSalaryEmployee = null;
         for (Employee employee : employees) {
             if (employee != null) {
@@ -118,7 +119,8 @@ public class Main {
         }
         return minSalaryEmployee;
     }
-    public static Employee findEmployeeWithMaxSalary(Employee[] employees) {
+
+    public static Employee findEmployeeWithMaxSalary() {
         Employee maxSalaryEmployee = null;
         for (Employee employee : employees) {
             if (employee != null) {
@@ -129,7 +131,8 @@ public class Main {
         }
         return maxSalaryEmployee;
     }
-    public static double calculateAverageSalary(Employee[] employees) {
+
+    public static double calculateAverageSalary() {
         double totalSalary = 0;
         int count = 0;
         for (Employee employee : employees) {
@@ -141,7 +144,7 @@ public class Main {
         return (count > 0) ? totalSalary / count : 0;
     }
 
-    public static void printEmployeeNames(Employee[] employees) {
+    public static void printEmployeeNames() {
         System.out.println("Ф.И.О. сотрудников:");
         for (Employee employee : employees) {
             if (employee != null) {
